@@ -1,0 +1,335 @@
+# 7. Privacy-Enhancing Technologies (PETs)
+
+## Aim
+
+To study Privacy-Enhancing Technologies (PETs) and understand how they protect users' privacy, reduce unnecessary exposure of personal information, and improve security during digital activities.
+
+## Introduction
+
+Privacy-Enhancing Technologies (PETs) are technologies and techniques designed to protect personal information while allowing users to access digital services. PETs can reduce tracking, protect communications, hide network information, encrypt data, or limit the amount of information exposed to third parties.
+
+Common examples include **VPNs, Tor, end-to-end encrypted messaging, Private DNS, encryption, and privacy-focused browsers**. Each technology protects a different part of the digital communication process. Therefore, using one PET does not automatically provide complete privacy.
+
+---
+
+## Objectives
+
+1. To understand the concept of Privacy-Enhancing Technologies.
+2. To study different technologies used for protecting user privacy.
+3. To understand how VPN, Tor, encryption and other PETs work.
+4. To compare their advantages and limitations.
+5. To identify appropriate use cases for different PETs.
+6. To understand the importance of combining security and privacy technologies.
+
+---
+
+# 1. VPN
+
+A **Virtual Private Network (VPN)** creates an encrypted connection between a user's device and a VPN server.
+
+### Privacy Mechanism
+
+The VPN encrypts network traffic between the device and the VPN server. Websites generally see the VPN server's IP address rather than the user's original IP address.
+
+### Advantages
+
+* Encrypts traffic between the device and VPN server.
+* Helps protect data on untrusted networks such as public Wi-Fi.
+* Can reduce exposure of the user's IP address to websites.
+* Useful for remote access to organizational networks.
+
+### Limitations
+
+* The VPN provider can potentially observe or log information depending on its architecture and policies.
+* A VPN does not make the user completely anonymous.
+* The VPN server becomes an important trust point.
+* VPN performance can vary.
+
+### Appropriate Use Cases
+
+* Public Wi-Fi
+* Remote work
+* Protecting network traffic from local network observers
+* Secure access to private organizational networks
+
+---
+
+# 2. Tor
+
+**Tor (The Onion Router)** is a network designed to improve anonymity by routing traffic through multiple volunteer-operated relays.
+
+### Privacy Mechanism
+
+Tor uses layered encryption and routes traffic through multiple relays. The design makes it more difficult for a single relay to associate the user's original IP address with the final destination.
+
+### Advantages
+
+* Provides stronger anonymity properties than ordinary direct Internet connections.
+* Hides the user's original IP address from the destination website.
+* Uses a distributed network rather than depending on one VPN provider.
+* Useful for privacy-sensitive browsing.
+
+### Limitations
+
+* Usually slower than a normal connection.
+* Some websites may block or challenge Tor traffic.
+* Tor does not automatically protect information that users voluntarily reveal.
+* Incorrect browser configuration can reduce privacy.
+
+### Appropriate Use Cases
+
+* Privacy-sensitive browsing
+* Reducing IP-based tracking
+* Research where network anonymity is important
+* Accessing services designed for Tor
+
+---
+
+# 3. End-to-End Encrypted Messaging
+
+**End-to-end encryption (E2EE)** protects messages so that only the communicating endpoints are intended to read their contents.
+
+### Privacy Mechanism
+
+Messages are encrypted on the sender's device and decrypted on the recipient's device. The service provider generally cannot read the plaintext contents when E2EE is correctly implemented.
+
+### Advantages
+
+* Protects message contents from intermediaries.
+* Useful for private conversations.
+* Protects communications against many forms of interception.
+* Can provide strong confidentiality when implemented correctly.
+
+### Limitations
+
+* Metadata may still be exposed depending on the application.
+* The security of the endpoint devices is important.
+* Backups may have different privacy properties.
+* Users can still reveal information by forwarding, copying or taking screenshots.
+
+### Appropriate Use Cases
+
+* Personal communication
+* Business communication
+* Sharing confidential information
+* Sensitive group conversations
+
+---
+
+# 4. Private DNS
+
+The **Domain Name System (DNS)** translates domain names such as `example.com` into IP addresses. Private or encrypted DNS technologies can protect DNS queries from being easily observed by local network intermediaries.
+
+Examples include **DNS over HTTPS (DoH)** and **DNS over TLS (DoT)**.
+
+### Privacy Mechanism
+
+Encrypted DNS protects DNS queries while they are transmitted between the device and the selected DNS resolver.
+
+### Advantages
+
+* Encrypts DNS queries.
+* Reduces exposure of browsing-related DNS requests to local network observers.
+* Helps prevent manipulation of DNS traffic in some situations.
+
+### Limitations
+
+* The DNS provider can still receive DNS queries.
+* It does not encrypt all Internet traffic.
+* Websites can still see information such as the user's IP address.
+* Choosing a trustworthy DNS provider is important.
+
+### Appropriate Use Cases
+
+* Public Wi-Fi
+* Protecting DNS queries
+* Reducing local-network DNS monitoring
+* Improving DNS security
+
+---
+
+# 5. Encryption
+
+**Encryption** converts readable information, called plaintext, into an unreadable form called ciphertext using a cryptographic method and key.
+
+### Privacy Mechanism
+
+Only someone possessing the appropriate key should be able to recover the original information.
+
+Encryption can protect:
+
+* Files
+* Messages
+* Databases
+* Network communications
+* Stored devices
+* Online transactions
+
+### Advantages
+
+* Protects confidentiality.
+* Reduces the impact of unauthorized access.
+* Can protect information both during transmission and while stored.
+* Widely applicable across different technologies.
+
+### Limitations
+
+* Losing encryption keys can result in loss of access.
+* Poor key management can weaken security.
+* Encryption does not protect information after legitimate decryption.
+* Metadata may remain visible even when message contents are encrypted.
+
+### Appropriate Use Cases
+
+* Protecting confidential files
+* Secure communications
+* Database protection
+* Device storage
+* Online transactions
+
+---
+
+# 6. Privacy-Focused Browsers
+
+Privacy-focused browsers are browsers designed to reduce tracking, fingerprinting, unwanted advertisements, or unnecessary data collection.
+
+### Privacy Mechanism
+
+Depending on the browser, privacy features may include:
+
+* Tracker blocking
+* Cookie controls
+* Fingerprinting protections
+* HTTPS enforcement
+* Private browsing features
+* Reduced third-party tracking
+
+### Advantages
+
+* Reduces web tracking.
+* Can block many third-party trackers.
+* Provides users with greater control over browser privacy.
+* Easy to use compared with some network-level privacy tools.
+
+### Limitations
+
+* Cannot provide complete anonymity.
+* Websites may still identify users through accounts or other information.
+* Some privacy features can cause website compatibility problems.
+* Browser privacy does not protect all other applications on the device.
+
+### Appropriate Use Cases
+
+* Everyday private browsing
+* Reducing advertising tracking
+* Limiting third-party trackers
+* Improving browser privacy
+
+---
+
+# Comparison Table
+
+| Technology                  | Privacy Mechanism                                                   | Main Advantage                             | Main Limitation                       | Appropriate Use                           |
+| --------------------------- | ------------------------------------------------------------------- | ------------------------------------------ | ------------------------------------- | ----------------------------------------- |
+| **VPN**                     | Encrypts traffic to a VPN server and changes the apparent source IP | Protects traffic on untrusted networks     | VPN provider becomes a trust point    | Public Wi-Fi, remote work                 |
+| **Tor**                     | Routes traffic through multiple relays using layered encryption     | Improves network anonymity                 | Slower and sometimes blocked          | Privacy-sensitive browsing                |
+| **E2EE Messaging**          | Encrypts messages between endpoints                                 | Protects message contents                  | Metadata/endpoints may remain exposed | Private communication                     |
+| **Private DNS**             | Encrypts DNS queries                                                | Protects DNS requests from local observers | Does not encrypt all traffic          | Public networks, DNS privacy              |
+| **Encryption**              | Converts plaintext into ciphertext using cryptographic keys         | Strong confidentiality                     | Key management is critical            | Files, devices, databases, communications |
+| **Privacy-Focused Browser** | Blocks trackers and provides anti-fingerprinting/privacy controls   | Reduces web tracking                       | Does not provide complete anonymity   | Everyday private browsing                 |
+
+---
+
+# How PETs Can Work Together
+
+Different PETs protect different parts of a user's digital activity.
+
+For example:
+
+**Privacy-focused browser**
+↓
+Reduces web tracking
+
+**Private DNS**
+↓
+Protects DNS queries
+
+**VPN**
+↓
+Encrypts traffic between the device and VPN server
+
+**End-to-end encryption**
+↓
+Protects message contents
+
+**Encryption**
+↓
+Protects stored files and information
+
+**Tor**
+↓
+Provides an additional anonymity-oriented network layer
+
+Therefore, PETs can complement one another, but combining technologies does not automatically guarantee complete anonymity or security.
+
+---
+
+# Advantages of PETs
+
+1. Protect personal and confidential information.
+2. Reduce unwanted tracking.
+3. Improve communication privacy.
+4. Protect information on untrusted networks.
+5. Reduce exposure of IP addresses and network activity.
+6. Support secure handling of sensitive information.
+7. Give users greater control over their digital privacy.
+
+---
+
+# Limitations of PETs
+
+1. No single technology provides complete privacy.
+2. Some services require users to trust a provider.
+3. Poor configuration can reduce effectiveness.
+4. Metadata may remain visible even when content is encrypted.
+5. Some PETs can reduce performance.
+6. Privacy technologies cannot prevent users from voluntarily revealing information.
+7. Device security remains important.
+
+---
+
+# Result and Discussion
+
+The study shows that different Privacy-Enhancing Technologies address different privacy risks. A VPN primarily protects network traffic between the user and VPN server, while Tor focuses on reducing network-level linkability. End-to-end encryption protects the contents of communications, whereas Private DNS protects DNS queries. Encryption provides confidentiality for stored or transmitted information, and privacy-focused browsers mainly reduce web tracking.
+
+The choice of PET should therefore depend on the specific privacy requirement. For example, protecting data on public Wi-Fi and protecting the contents of a private message are different problems and may require different technologies.
+
+---
+
+# Conclusion
+
+Privacy-Enhancing Technologies are important tools for reducing privacy risks in modern digital environments. VPNs, Tor, end-to-end encrypted messaging, Private DNS, encryption, and privacy-focused browsers each provide different forms of protection.
+
+However, PETs should not be considered a complete replacement for good security practices. Strong passwords, multi-factor authentication, software updates, careful sharing of personal information, secure devices, and appropriate privacy settings are also important.
+
+The most suitable PET depends on the user's specific requirement, such as **network privacy, anonymous browsing, secure communication, DNS privacy, data confidentiality, or protection against web tracking**.
+
+## References
+
+1. Cloudflare. *What is a VPN?* Cloudflare Learning Center.
+   [https://developers.cloudflare.com/learning-paths/replace-vpn/concepts/vpn-overview/](https://developers.cloudflare.com/learning-paths/replace-vpn/concepts/vpn-overview/?utm_source=chatgpt.com)
+
+2. Tor Project. *The Privacy and Anonymity Protections Tor Offers.*
+   [https://support.torproject.org/about-tor/introduction/protections/](https://support.torproject.org/about-tor/introduction/protections/?utm_source=chatgpt.com)
+
+3. National Institute of Standards and Technology (NIST). *Encryption – CSRC Glossary.*
+   [https://csrc.nist.gov/glossary/term/encryption](https://csrc.nist.gov/glossary/term/encryption?utm_source=chatgpt.com)
+
+4. Mozilla Support. *Firefox Privacy and Security Features.*
+   [https://support.mozilla.org/en-US/kb/firefox-privacy-and-security-features](https://support.mozilla.org/en-US/kb/firefox-privacy-and-security-features?utm_source=chatgpt.com)
+
+5. Mozilla. *Firefox Privacy Notice.*
+   [https://www.mozilla.org/en-US/privacy/firefox/](https://www.mozilla.org/en-US/privacy/firefox/?utm_source=chatgpt.com)
+
+6. Tor Project. *Privacy Policy.*
+   [https://www.torproject.org/about/privacy_policy/](https://www.torproject.org/about/privacy_policy/?utm_source=chatgpt.com)
