@@ -1,0 +1,592 @@
+# Anonymization Techniques for Data Privacy
+
+## 1. Aim
+
+To study and implement data anonymization techniques used to protect personally identifiable information while retaining useful information in a dataset.
+
+## 2. Introduction
+
+Data anonymization is the process of modifying or removing personally identifiable information (PII) so that individuals cannot be easily identified from the resulting dataset.
+
+Organizations collect large amounts of personal information for education, healthcare, banking, business, research, and other purposes. If such information is exposed, it may lead to privacy violations, identity theft, discrimination, or other risks.
+
+Anonymization techniques help reduce these risks by removing direct identifiers, masking sensitive values, generalizing information, or adding controlled statistical noise.
+
+This project demonstrates four techniques:
+
+1. Data masking
+2. K-anonymity
+3. Differential privacy
+4. Removal and generalization of identifying attributes
+
+## 3. Objectives
+
+The main objectives are:
+
+1. To understand the concept of data anonymization.
+2. To identify personally identifiable information.
+3. To understand data masking.
+4. To implement K-anonymity.
+5. To understand the basic concept of differential privacy.
+6. To remove direct identifiers from a dataset.
+7. To generalize sensitive attributes.
+8. To compare the original and anonymized datasets.
+9. To understand the privacy-utility trade-off.
+
+## 4. What is Personally Identifiable Information?
+
+Personally Identifiable Information (PII) is information that can identify an individual directly or, in combination with other information, contribute to identifying an individual.
+
+Examples include:
+
+* Name
+* Phone number
+* Email address
+* Address
+* Identification number
+* Biometric information
+
+In the example dataset, **Name** is a direct identifier.
+
+## 5. Original Dataset
+
+Consider the following student health dataset:
+
+| Name  | Age | City   | Disease |
+| ----- | --: | ------ | ------- |
+| Rahul |  21 | Delhi  | Flu     |
+| Amit  |  22 | Delhi  | Cold    |
+| Neha  |  21 | Delhi  | Flu     |
+| Priya |  23 | Mumbai | Cold    |
+| Ankit |  24 | Mumbai | Flu     |
+| Riya  |  23 | Mumbai | Cold    |
+
+The **Name** column directly identifies individuals.
+
+The combination of **Age + City** may also contribute to identifying a person. These attributes are called **quasi-identifiers**.
+
+The **Disease** column is sensitive information.
+
+## 6. Data Masking
+
+Data masking replaces sensitive information with modified values while preserving the general structure of the data.
+
+For example:
+
+| Original Name | Masked Name |
+| ------------- | ----------- |
+| Rahul         | R****       |
+| Amit          | A****       |
+| Neha          | N****       |
+| Priya         | P****       |
+| Ankit         | A****       |
+| Riya          | R****       |
+
+Instead of displaying the complete name, only the first character is shown.
+
+### Advantages
+
+* Easy to implement
+* Useful for displaying data to unauthorized users
+* Reduces exposure of direct identifiers
+
+### Limitation
+
+Masking does not necessarily make data fully anonymous. Other attributes may still allow an individual to be identified.
+
+## 7. Removal of Identifying Attributes
+
+One simple anonymization technique is removing direct identifiers.
+
+The **Name** column can be removed:
+
+### Before
+
+| Name  | Age | City  | Disease |
+| ----- | --: | ----- | ------- |
+| Rahul |  21 | Delhi | Flu     |
+| Amit  |  22 | Delhi | Cold    |
+| Neha  |  21 | Delhi | Flu     |
+
+### After Removing Name
+
+| Age | City  | Disease |
+| --: | ----- | ------- |
+|  21 | Delhi | Flu     |
+|  22 | Delhi | Cold    |
+|  21 | Delhi | Flu     |
+
+Removing names reduces direct identification, but it does not necessarily prevent re-identification using other information.
+
+## 8. Generalization
+
+Generalization replaces specific values with broader categories.
+
+For example:
+
+Instead of:
+
+```text
+Age = 21
+Age = 22
+Age = 23
+Age = 24
+```
+
+we can use:
+
+```text
+Age = 20-24
+```
+
+Similarly, specific cities can be generalized into regions:
+
+```text
+Delhi → North India
+Mumbai → West India
+```
+
+### Generalized Dataset
+
+| Age Group | Region      | Disease |
+| --------- | ----------- | ------- |
+| 20-24     | North India | Flu     |
+| 20-24     | North India | Cold    |
+| 20-24     | North India | Flu     |
+| 20-24     | West India  | Cold    |
+| 20-24     | West India  | Flu     |
+| 20-24     | West India  | Cold    |
+
+Generalization reduces the amount of identifying information while retaining useful statistical information.
+
+## 9. K-Anonymity
+
+K-anonymity is a privacy model in which each combination of selected quasi-identifiers should appear at least **k times** in the released dataset.
+
+For example, if:
+
+**k = 2**
+
+then each combination of quasi-identifiers should occur at least twice.
+
+Suppose the quasi-identifiers are:
+
+**Age Group + Region**
+
+The generalized dataset contains:
+
+| Age Group | Region      | Disease |
+| --------- | ----------- | ------- |
+| 20-24     | North India | Flu     |
+| 20-24     | North India | Cold    |
+| 20-24     | North India | Flu     |
+| 20-24     | West India  | Cold    |
+| 20-24     | West India  | Flu     |
+| 20-24     | West India  | Cold    |
+
+Each combination occurs at least three times, so the dataset satisfies **3-anonymity** with respect to these quasi-identifiers.
+
+### Important Point
+
+K-anonymity protects against direct identification through the selected quasi-identifiers, but it does not automatically protect against every type of inference attack. For example, if all members of an anonymity group have the same sensitive value, the sensitive value may still be inferred.
+
+## 10. Differential Privacy
+
+Differential privacy is a mathematical framework for limiting what can be learned about an individual from statistical outputs.
+
+Instead of releasing exact statistics, controlled random noise can be added to the result.
+
+For example:
+
+Actual number of students with Flu:
+
+```text
+3
+```
+
+A privacy-preserving statistical result might be:
+
+```text
+4
+```
+
+The added noise makes it harder to determine whether a particular individual's data contributed to the result.
+
+A common mechanism for simple numerical queries is the **Laplace mechanism**.
+
+The amount of noise is related to a privacy parameter called **epsilon (ε)**. Smaller values of ε generally provide stronger privacy but can reduce the accuracy of the released statistic.
+
+## 11. Python Implementation
+
+The following program demonstrates:
+
+1. Original dataset
+2. Data masking
+3. Removal of names
+4. Age and city generalization
+5. K-anonymity checking
+6. A simple differential privacy demonstration
+
+### Required Libraries
+
+Install pandas and NumPy:
+
+```bash
+pip install pandas numpy
+```
+
+### Python Program
+
+```python
+import pandas as pd
+import numpy as np
+
+# ---------------------------------------
+# 1. ORIGINAL DATASET
+# ---------------------------------------
+
+data = {
+    "Name": ["Rahul", "Amit", "Neha", "Priya", "Ankit", "Riya"],
+    "Age": [21, 22, 21, 23, 24, 23],
+    "City": ["Delhi", "Delhi", "Delhi", "Mumbai", "Mumbai", "Mumbai"],
+    "Disease": ["Flu", "Cold", "Flu", "Cold", "Flu", "Cold"]
+}
+
+df = pd.DataFrame(data)
+
+print("----- ORIGINAL DATASET -----")
+print(df)
+
+
+# ---------------------------------------
+# 2. DATA MASKING
+# ---------------------------------------
+
+masked_df = df.copy()
+
+masked_df["Name"] = masked_df["Name"].apply(
+    lambda x: x[0] + "*" * (len(x) - 1)
+)
+
+print("\n----- DATA MASKING -----")
+print(masked_df)
+
+
+# ---------------------------------------
+# 3. REMOVE DIRECT IDENTIFIER
+# ---------------------------------------
+
+removed_df = df.drop(columns=["Name"])
+
+print("\n----- AFTER REMOVING NAME -----")
+print(removed_df)
+
+
+# ---------------------------------------
+# 4. GENERALIZATION
+# ---------------------------------------
+
+generalized_df = df.copy()
+
+# Generalize age
+generalized_df["Age Group"] = generalized_df["Age"].apply(
+    lambda x: "20-24"
+)
+
+# Generalize city
+generalized_df["Region"] = generalized_df["City"].map({
+    "Delhi": "North India",
+    "Mumbai": "West India"
+})
+
+# Remove direct identifiers and original quasi-identifiers
+generalized_df = generalized_df[
+    ["Age Group", "Region", "Disease"]
+]
+
+print("\n----- GENERALIZED DATASET -----")
+print(generalized_df)
+
+
+# ---------------------------------------
+# 5. K-ANONYMITY
+# ---------------------------------------
+
+k = 3
+
+group_sizes = generalized_df.groupby(
+    ["Age Group", "Region"]
+).size()
+
+print("\n----- K-ANONYMITY CHECK -----")
+print(group_sizes)
+
+if group_sizes.min() >= k:
+    print(f"The dataset satisfies {k}-anonymity.")
+else:
+    print(f"The dataset does not satisfy {k}-anonymity.")
+
+
+# ---------------------------------------
+# 6. DIFFERENTIAL PRIVACY
+# ---------------------------------------
+
+actual_flu_count = (df["Disease"] == "Flu").sum()
+
+epsilon = 1.0
+
+# Sensitivity of counting query is 1
+sensitivity = 1
+
+# Generate Laplace noise
+noise = np.random.laplace(
+    loc=0,
+    scale=sensitivity / epsilon
+)
+
+private_flu_count = actual_flu_count + noise
+
+print("\n----- DIFFERENTIAL PRIVACY -----")
+print("Actual Flu Count       :", actual_flu_count)
+print("Added Noise             :", round(noise, 2))
+print("Private Flu Count       :", round(private_flu_count, 2))
+```
+
+## 12. Explanation of the Program
+
+### Step 1: Create the Dataset
+
+```python
+df = pd.DataFrame(data)
+```
+
+The program creates a dataset containing names, ages, cities, and diseases.
+
+### Step 2: Apply Data Masking
+
+```python
+masked_df["Name"] = masked_df["Name"].apply(
+    lambda x: x[0] + "*" * (len(x) - 1)
+)
+```
+
+This replaces most characters of each name with `*`.
+
+For example:
+
+```text
+Rahul → R****
+```
+
+### Step 3: Remove Names
+
+```python
+removed_df = df.drop(columns=["Name"])
+```
+
+The direct identifier is removed from the dataset.
+
+### Step 4: Generalize Data
+
+```python
+generalized_df["Age Group"] = generalized_df["Age"].apply(
+    lambda x: "20-24"
+)
+```
+
+Specific ages are replaced with a broader age range.
+
+Cities are also converted into regions:
+
+```text
+Delhi → North India
+Mumbai → West India
+```
+
+### Step 5: Check K-Anonymity
+
+```python
+group_sizes = generalized_df.groupby(
+    ["Age Group", "Region"]
+).size()
+```
+
+The program counts how many records share the same quasi-identifier combination.
+
+Since each group contains at least three records, the example satisfies **3-anonymity**.
+
+### Step 6: Apply Differential Privacy
+
+The program first counts the actual number of records containing `Flu`.
+
+Then it adds Laplace noise:
+
+```python
+noise = np.random.laplace(
+    loc=0,
+    scale=sensitivity / epsilon
+)
+```
+
+The resulting value is a privacy-preserving approximation rather than the exact count.
+
+## 13. Expected Output
+
+A typical output will look similar to:
+
+```text
+----- ORIGINAL DATASET -----
+    Name  Age    City Disease
+0  Rahul   21   Delhi     Flu
+1   Amit   22   Delhi    Cold
+2   Neha   21   Delhi     Flu
+3  Priya   23  Mumbai    Cold
+4  Ankit   24  Mumbai     Flu
+5   Riya   23  Mumbai    Cold
+
+----- DATA MASKING -----
+    Name  Age    City Disease
+0  R****   21   Delhi     Flu
+1  A***    22   Delhi    Cold
+2  N***    21   Delhi     Flu
+3  P****   23  Mumbai    Cold
+4  A****   24  Mumbai     Flu
+5  R***    23  Mumbai    Cold
+
+----- AFTER REMOVING NAME -----
+   Age    City Disease
+0   21   Delhi     Flu
+1   22   Delhi    Cold
+2   21   Delhi     Flu
+3   23  Mumbai    Cold
+4   24  Mumbai     Flu
+5   23  Mumbai    Cold
+
+----- GENERALIZED DATASET -----
+  Age Group      Region Disease
+0     20-24  North India     Flu
+1     20-24  North India    Cold
+2     20-24  North India     Flu
+3     20-24   West India    Cold
+4     20-24   West India     Flu
+5     20-24   West India    Cold
+
+----- K-ANONYMITY CHECK -----
+Age Group  Region
+20-24      North India    3
+           West India     3
+
+The dataset satisfies 3-anonymity.
+
+----- DIFFERENTIAL PRIVACY -----
+Actual Flu Count       : 3
+Added Noise             : 0.XX
+Private Flu Count       : 3.XX
+```
+
+The differential privacy values will vary each time because random noise is generated.
+
+## 14. Original vs Anonymized Dataset
+
+### Original Dataset
+
+| Name  | Age | City   | Disease |
+| ----- | --: | ------ | ------- |
+| Rahul |  21 | Delhi  | Flu     |
+| Amit  |  22 | Delhi  | Cold    |
+| Neha  |  21 | Delhi  | Flu     |
+| Priya |  23 | Mumbai | Cold    |
+| Ankit |  24 | Mumbai | Flu     |
+| Riya  |  23 | Mumbai | Cold    |
+
+### Anonymized Dataset
+
+| Age Group | Region      | Disease |
+| --------- | ----------- | ------- |
+| 20-24     | North India | Flu     |
+| 20-24     | North India | Cold    |
+| 20-24     | North India | Flu     |
+| 20-24     | West India  | Cold    |
+| 20-24     | West India  | Flu     |
+| 20-24     | West India  | Cold    |
+
+The anonymized dataset no longer contains names, and the age and city information have been generalized.
+
+## 15. Privacy Analysis
+
+| Technique            | Privacy Protection                                          | Data Utility | Main Limitation                           |
+| -------------------- | ----------------------------------------------------------- | ------------ | ----------------------------------------- |
+| Data Masking         | Hides parts of identifiers                                  | High         | May still permit identification           |
+| Removing Identifiers | Removes direct identifiers                                  | High         | Other attributes may identify individuals |
+| Generalization       | Reduces identifying detail                                  | Medium/High  | Some information is lost                  |
+| K-Anonymity          | Groups individuals based on quasi-identifiers               | Medium       | Vulnerable to some inference attacks      |
+| Differential Privacy | Limits information about individuals in statistical outputs | Medium/High  | Noise can reduce accuracy                 |
+
+## 16. Privacy-Utility Trade-Off
+
+An important concept in anonymization is the **privacy-utility trade-off**.
+
+Increasing privacy protection can reduce the usefulness or accuracy of the data.
+
+For example:
+
+```text
+More Generalization
+        ↓
+Less Detailed Data
+        ↓
+Higher Privacy
+        ↓
+Lower Data Utility
+```
+
+On the other hand, keeping highly detailed information can make the dataset more useful for analysis but may increase privacy risks.
+
+Therefore, an organization should select an anonymization method according to the intended use of the data and the associated privacy risks.
+
+## 17. Applications
+
+Anonymization techniques are used in:
+
+1. Healthcare research
+2. Educational data analysis
+3. Financial analytics
+4. Government statistics
+5. Scientific research
+6. Customer analytics
+7. Machine learning datasets
+8. Public data publishing
+9. Survey analysis
+10. Business intelligence
+
+## 18. Advantages
+
+1. Reduces exposure of personal information.
+2. Helps minimize privacy risks.
+3. Allows organizations to analyze data while reducing direct identification.
+4. Can support safer data sharing.
+5. Helps researchers work with data while reducing exposure of identifiers.
+6. Provides different levels of privacy protection depending on the technique.
+
+## 19. Limitations
+
+1. Anonymization does not guarantee that re-identification is impossible.
+2. Combining datasets may create additional identification risks.
+3. Excessive anonymization can reduce data usefulness.
+4. K-anonymity does not prevent every inference attack.
+5. Differential privacy introduces statistical noise.
+6. Choosing inappropriate quasi-identifiers can weaken anonymization.
+
+## 20. Result
+
+The dataset was successfully anonymized using data masking, removal of direct identifiers, generalization, and K-anonymity. A basic differential privacy mechanism was also demonstrated by adding controlled random noise to a statistical query.
+
+The comparison shows that different techniques provide different levels of privacy and data utility.
+
+## 21. Conclusion
+
+Data anonymization is an important technique for reducing privacy risks when personal data is used for analysis or shared with other parties. In this project, names were masked or removed, ages and cities were generalized, K-anonymity was applied to groups of records, and differential privacy was demonstrated by adding controlled noise to a statistical result.
+
+No single anonymization technique is suitable for every situation. The appropriate technique depends on the sensitivity of the data, the possibility of re-identification, the intended use of the dataset, and the required level of accuracy.
+
+Therefore, organizations should carefully evaluate both **privacy protection and data utility** when designing an anonymization strategy.
